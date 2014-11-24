@@ -1,0 +1,17 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 1.0.0
+apiversion: 2
+description: audio_cropper
+author: Nick den Engelsman
+license: Specify your license
+copyright: Copyright (c) 2014 by Your Company
+
+# these should not be edited
+name: audio_cropper
+moduleid: com.composrapp.audiocropper
+guid: 10bc7a25-3fab-4c7e-b6cb-a85bb4257888
+platform: iphone
+minsdk: 3.4.0.GA

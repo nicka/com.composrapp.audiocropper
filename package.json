@@ -1,0 +1,19 @@
+{
+  "name": "gulpfile-ti-module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "gulpfile for titanium module",
+  "dependencies": {},
+  "devDependencies": {
+    "del": "^0.1.1",
+    "execSync": "^1.0.2",
+    "gulp": "^3.8.7",
+    "gulp-json-editor": "^2.0.2",
+    "gulp-shell": "^0.2.9",
+    "gulp-util": "^3.0.0",
+    "through2": "^0.6.1",
+    "uuid-js": "^0.7.4"
+  },
+  "author": "Jong Eun Lee @yomybaby",
+  "license": "Apache 2"
+}
