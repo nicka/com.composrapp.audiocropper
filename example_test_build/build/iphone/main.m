@@ -15,7 +15,7 @@ NSString * const TI_APPLICATION_NAME = @"example_test_build";
 NSString * const TI_APPLICATION_VERSION = @"1.0";
 NSString * const TI_APPLICATION_DESCRIPTION = @"not specified";
 NSString * const TI_APPLICATION_COPYRIGHT = @"not specified";
-NSString * const TI_APPLICATION_GUID = @"1ab8d4c1-7711-4e97-8214-0e6e0215190f";
+NSString * const TI_APPLICATION_GUID = @"5d63d0b7-fde0-452b-b95a-ad5de47184a8";
 BOOL const TI_APPLICATION_ANALYTICS = true;
 NSString * const TI_APPLICATION_BUILD_TYPE = @"";
 

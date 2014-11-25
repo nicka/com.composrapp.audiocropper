@@ -3,24 +3,46 @@
 // to test out the module and to provide instructions
 // to users on how to use it by example.
 
+var AudioCropper = require('com.composrapp.audiocropper');
+Ti.API.info('module is => ' + AudioCropper);
 
-// open a single window
-var win = Ti.UI.createWindow({
-	backgroundColor:'white'
-});
+// Setup in and output files
+var inputAudio = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'test1.m4a');
+var outputAudio = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'cropped-test1.m4a');
 
-// TODO: write your module tests here
-var audio_cropper = require('com.composrapp.audiocropper');
-Ti.API.info("module is => " + audio_cropper);
+// Remove old cropped audio
+if (outputAudio.exists()) outputAudio.deleteFile();
+// List applicationDataDirectory files
+logAppDirFiles();
 
-var inputAudio = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory + '/test1.m4a');
-var outputAudio = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory + '/cropped-test1.m4a');
+function logAppDirFiles() {
+  var dirItems = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory).getDirectoryListing();
+  for (var i = 0; i < dirItems.length; i++) {
+    var itemFullPath = Ti.Filesystem.separator + dirItems[i].toString();
+    if (itemFullPath.indexOf('.m4a') != -1) Ti.API.info(itemFullPath);
+  }
+}
 
-var timmed_audio = audio_cropper.cropAudio({
-	cropStartMarker: 10.0,
-  cropEndMarker: 20.0,
+// Crop audio
+AudioCropper.cropAudio({
+  cropStartMarker: 4.5,
+  cropEndMarker: 6.5,
   audioFileInput: inputAudio.resolve(),
   audioFileOutput: outputAudio.resolve()
 });
 
-Ti.API.info("timmed_audio " + timmed_audio);
+AudioCropper.addEventListener('error', function() {
+  Ti.API.error('Failed to crop audio');
+});
+
+AudioCropper.addEventListener('success', function() {
+  Ti.API.info('Successfully cropped audio');
+  logAppDirFiles();
+});
+
+// Open example window
+var win = Ti.UI.createWindow({
+  backgroundColor:'white'
+});
+
+win.open();

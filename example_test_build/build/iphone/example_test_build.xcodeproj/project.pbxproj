@@ -30,9 +30,9 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2412F467115C296300454E5B /* TiMediaVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2412F465115C296300454E5B /* TiMediaVideoPlayer.m */; };
 		242E8E3111BA39FD0046A0D0 /* libTiCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 242E8E3011BA39FD0046A0D0 /* libTiCore.a */; };
-		A11F07F359BE44E9AF383A56 /* libcom.composrapp.audiocropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CAB8D3271354DEB8DEB8877 /* libcom.composrapp.audiocropper.a */; };
+		B83C4714F70C46FF9EB4DBE5 /* libcom.composrapp.audiocropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B151CA463293448F8E482A49 /* libcom.composrapp.audiocropper.a */; };
 		242E8E3211BA39FE0046A0D0 /* libTiCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 242E8E3011BA39FD0046A0D0 /* libTiCore.a */; };
-		140C8F59C97C44D4A5ABF232 /* libcom.composrapp.audiocropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CAB8D3271354DEB8DEB8877 /* libcom.composrapp.audiocropper.a */; };
+		03DF0B735B29419E85FF6B7B /* libcom.composrapp.audiocropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B151CA463293448F8E482A49 /* libcom.composrapp.audiocropper.a */; };
 		242E967711BAD2F20046A0D0 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 242E967411BAD2F20046A0D0 /* AsyncSocket.m */; };
 		242E967811BAD2F20046A0D0 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 242E967611BAD2F20046A0D0 /* AsyncUdpSocket.m */; };
 		242E967911BAD2F20046A0D0 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 242E967411BAD2F20046A0D0 /* AsyncSocket.m */; };
@@ -899,7 +899,7 @@
 		DABB37B412E8CB280026A6EA /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 24EB0A57111E1BAE001DC2D1 /* libxml2.dylib */; };
 		DABB37B512E8CB280026A6EA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24597034118FF66300519F79 /* StoreKit.framework */; };
 		DABB37B612E8CB280026A6EA /* libTiCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 242E8E3011BA39FD0046A0D0 /* libTiCore.a */; };
-		F34535D77A7446398A3F009C /* libcom.composrapp.audiocropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CAB8D3271354DEB8DEB8877 /* libcom.composrapp.audiocropper.a */; };
+		F0316B4D328D40699FE4D3E6 /* libcom.composrapp.audiocropper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B151CA463293448F8E482A49 /* libcom.composrapp.audiocropper.a */; };
 		DABB37B712E8CB280026A6EA /* libtiverify.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D5C75811E6364F00F097E2 /* libtiverify.a */; };
 		DABDEB08128B5A8F00C85FEA /* AudioStreamerCUR.m in Sources */ = {isa = PBXBuildFile; fileRef = DA9FF582128A1F3600457759 /* AudioStreamerCUR.m */; };
 		DABF3ECF134D210400836137 /* TiBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = DABF3ECE134D210400836137 /* TiBuffer.m */; };
@@ -949,7 +949,7 @@
 		241EAA21118AB3BB0081A5BE /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = defines.h; path = Classes/defines.h; sourceTree = SOURCE_ROOT; };
 		241EAEC5118E2BA90081A5BE /* project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = project.xcconfig; sourceTree = "<group>"; };
 		242E8E3011BA39FD0046A0D0 /* libTiCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTiCore.a; path = lib/libTiCore.a; sourceTree = SOURCE_ROOT; };
-		8CAB8D3271354DEB8DEB8877 /* libcom.composrapp.audiocropper.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcom.composrapp.audiocropper.a; path = "/Users/nickdenengelsman/Development/titanium/modules/audio_cropper/example_test_build/modules/iphone/com.composrapp.audiocropper/1.0.0/libcom.composrapp.audiocropper.a"; sourceTree = "<absolute>"; };
+		B151CA463293448F8E482A49 /* libcom.composrapp.audiocropper.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcom.composrapp.audiocropper.a; path = "/Users/nickdenengelsman/Development/titanium/modules/audio_cropper/example_test_build/modules/iphone/com.composrapp.audiocropper/1.0.0/libcom.composrapp.audiocropper.a"; sourceTree = "<absolute>"; };
 		242E95C811BAC8B40046A0D0 /* TiDebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TiDebugger.h; path = Classes/TiDebugger.h; sourceTree = SOURCE_ROOT; };
 		242E967311BAD2F20046A0D0 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = Classes/AsyncSocket.h; sourceTree = SOURCE_ROOT; };
 		242E967411BAD2F20046A0D0 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = Classes/AsyncSocket.m; sourceTree = SOURCE_ROOT; };
@@ -1582,7 +1582,7 @@
 				24EB0A58111E1BAE001DC2D1 /* libxml2.dylib in Frameworks */,
 				24597035118FF66300519F79 /* StoreKit.framework in Frameworks */,
 				242E8E3111BA39FD0046A0D0 /* libTiCore.a in Frameworks */,
-				A11F07F359BE44E9AF383A56 /* libcom.composrapp.audiocropper.a in Frameworks */,
+				B83C4714F70C46FF9EB4DBE5 /* libcom.composrapp.audiocropper.a in Frameworks */,
 				B606EF60190B42FB00663EFC /* libAPSHTTPClient.a in Frameworks */,
 				242EA11611BD956F0046A0D0 /* ExternalAccessory.framework in Frameworks */,
 				24D5C75911E6364F00F097E2 /* libtiverify.a in Frameworks */,
@@ -1622,7 +1622,7 @@
 				24D8E4AB119B9D8A00F8CAA6 /* libxml2.dylib in Frameworks */,
 				24D8E4AC119B9D8A00F8CAA6 /* StoreKit.framework in Frameworks */,
 				242E8E3211BA39FE0046A0D0 /* libTiCore.a in Frameworks */,
-				140C8F59C97C44D4A5ABF232 /* libcom.composrapp.audiocropper.a in Frameworks */,
+				03DF0B735B29419E85FF6B7B /* libcom.composrapp.audiocropper.a in Frameworks */,
 				24D5C75A11E6364F00F097E2 /* libtiverify.a in Frameworks */,
 				DAA4B2AF134E3DBD00AB6011 /* libti_ios_debugger.a in Frameworks */,
 				DADE76D613D65C6F0079FC75 /* libicucore.dylib in Frameworks */,
@@ -1662,7 +1662,7 @@
 				DABB37B412E8CB280026A6EA /* libxml2.dylib in Frameworks */,
 				DABB37B512E8CB280026A6EA /* StoreKit.framework in Frameworks */,
 				DABB37B612E8CB280026A6EA /* libTiCore.a in Frameworks */,
-				F34535D77A7446398A3F009C /* libcom.composrapp.audiocropper.a in Frameworks */,
+				F0316B4D328D40699FE4D3E6 /* libcom.composrapp.audiocropper.a in Frameworks */,
 				DABB37B712E8CB280026A6EA /* libtiverify.a in Frameworks */,
 				DAA4B2B0134E3DBD00AB6011 /* libti_ios_debugger.a in Frameworks */,
 				DADE76D713D65C7D0079FC75 /* libicucore.dylib in Frameworks */,
@@ -2755,7 +2755,7 @@
 				DAA4B2AD134E3DBD00AB6011 /* libti_ios_debugger.a */,
 				24D5C75811E6364F00F097E2 /* libtiverify.a */,
 				242E8E3011BA39FD0046A0D0 /* libTiCore.a */,
-				8CAB8D3271354DEB8DEB8877 /* libcom.composrapp.audiocropper.a */,
+				B151CA463293448F8E482A49 /* libcom.composrapp.audiocropper.a */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,

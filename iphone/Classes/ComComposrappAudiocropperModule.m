@@ -7,18 +7,6 @@
 
 #import "ComComposrappAudiocropperModule.h"
 
-// TiClasses
-#import "TiModule.h"
-#import "TiBase.h"
-#import "TiHost.h"
-#import "TiUtils.h"
-
-// Required for cropping audio
-#import <Foundation/Foundation.h>
-#import <CoreMedia/CoreMedia.h>
-#import <AVFoundation/AVFoundation.h>
-#import <UIKit/UIKit.h>
-
 @implementation ComComposrappAudiocropperModule
 
 #pragma mark Internal
@@ -95,6 +83,7 @@
 }
 
 #pragma Public APIs
+
 -(id)cropAudio:(id)args
 {
     NSDictionary * params = [args objectAtIndex:0];
@@ -107,42 +96,28 @@
     NSURL *audioFileOutput = [NSURL fileURLWithPath:audioOutput];
     // NSLog(@"[INFO] %@ audioFileOutput", audioFileOutput);
     
-    NSString *cropStart = [TiUtils stringValue:[params objectForKey:@"cropStartMarker"]];
-    CGFloat cropStartMarker = (CGFloat)[cropStart floatValue];
-    // NSLog(@"[INFO] %@ cropStart", cropStart);
-    // NSLog(@"[INFO] %@ cropStartMarker", cropStartMarker);
+    float cropStartMarker = [TiUtils floatValue:[params objectForKey:@"cropStartMarker"]];
+    // NSLog(@"[INFO] %f cropStartMarker", cropStartMarker);
     
-    NSString *cropEnd = [TiUtils stringValue:[params objectForKey:@"cropEndMarker"]];
-    CGFloat cropEndMarker = (CGFloat)[cropEnd floatValue];
-    // NSLog(@"[INFO] %@ cropEnd", cropEnd);
-    // NSLog(@"[INFO] %@ cropEndMarker", cropEndMarker);
+    float cropEndMarker = [TiUtils floatValue:[params objectForKey:@"cropEndMarker"]];
+    // NSLog(@"[INFO] %f cropEndMarker", cropEndMarker);
     
     if (!audioFileInput || !audioFileOutput) {
-        NSLog(@"[ERROR] %@ No audioFileInput or audioFileOutput");
+        NSLog(@"[ERROR] No audioFileInput or audioFileOutput");
+        [super fireEvent:@"error"];
         return [NSNull null];
     }
 
-    NSLog(@"[INFO] %@ start NSFileManager");
-    
     [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput error:NULL];
     
-    NSLog(@"[INFO] %@ end NSFileManager");
-    
-    NSLog(@"[INFO] %@ start AVAsset");
-    
     AVAsset *asset = [AVAsset assetWithURL:audioFileInput];
-    
-    NSLog(@"[INFO] %@ end AVAsset");
-    
-    NSLog(@"[INFO] %@ start AVAssetExportSession");
     
     AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:asset
                                                                             presetName:AVAssetExportPresetAppleM4A];
     
-    NSLog(@"[INFO] %@ end AVAssetExportSession");
-    
     if (exportSession == nil) {
-        NSLog(@"[ERROR] %@ Could not setup export session");
+        NSLog(@"[ERROR] Could not setup export session");
+        [super fireEvent:@"error"];
         return [NSNull null];
     }
     
@@ -157,24 +132,15 @@
     [exportSession exportAsynchronouslyWithCompletionHandler:^
      {
          if (AVAssetExportSessionStatusCompleted == exportSession.status) {
-             NSLog(@"[INFO] %@ Cropped audio");
+             // NSLog(@"[INFO] Cropped audio");
+             [super fireEvent:@"success"];
          } else if (AVAssetExportSessionStatusFailed == exportSession.status) {
-             NSLog(@"[ERROR] %@ Could not crop audio");
+             // NSLog(@"[ERROR] Could not crop audio");
+             [super fireEvent:@"error"];
          }
      }];
     
-    TiBlob *theBlob = [[TiBlob alloc] initWithFile:audioFileOutput];
-    if(theBlob != nil) {
-        //[theString release];
-        //[theURL release];
-        NSLog(@"[INFO] %@ Return cropped");
-        return theBlob;
-    } else {
-        //[theString release];
-        //[theURL release];
-        NSLog(@"[ERROR] %@ Cropped audio not found");
-        return [NSNull null];
-    }
+    return [NSNull null];
 }
 
 @end
