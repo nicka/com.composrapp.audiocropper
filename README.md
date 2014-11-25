@@ -42,8 +42,8 @@ AudioCropper.addEventListener('success', function() {
 
 1. Install packages with `npm install`
 2. Update examples in `example/app.js`
-3. USe `gulp ios` to build and test the module
+3. Use `gulp ios` to build and test the module
 
 ### TODO
 
-Return blob on success instead of eventListener.
+Cleanup eventListeners.
