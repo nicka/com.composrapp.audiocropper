@@ -11,8 +11,8 @@ var AudioCropper = require('com.composrapp.audiocropper');
 Specify in and output files:
 
 ```
-var inputAudio = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'test1.m4a');
-var outputAudio = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'cropped-test1.m4a');
+var inputAudio = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'example.mp3');
+var outputAudio = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'cropped-example.mp3');
 ```
 
 Pass arguments to module:

@@ -1,1 +1,5 @@
 /example_test_build
+tmp
+bin
+build
+*.xcuserdatad
