@@ -84,63 +84,94 @@
 
 #pragma Public APIs
 
--(id)cropAudio:(id)args
+-(void)cropAudio:(id)args
 {
     NSDictionary * params = [args objectAtIndex:0];
     
     NSString *audioInput = [TiUtils stringValue:[params objectForKey:@"audioFileInput"]];
     NSURL *audioFileInput = [NSURL fileURLWithPath:audioInput];
-    // NSLog(@"[INFO] %@ audioFileInput", audioFileInput);
-    
     NSString *audioOutput = [TiUtils stringValue:[params objectForKey:@"audioFileOutput"]];
     NSURL *audioFileOutput = [NSURL fileURLWithPath:audioOutput];
-    // NSLog(@"[INFO] %@ audioFileOutput", audioFileOutput);
     
     float cropStartMarker = [TiUtils floatValue:[params objectForKey:@"cropStartMarker"]];
-    // NSLog(@"[INFO] %f cropStartMarker", cropStartMarker);
-    
     float cropEndMarker = [TiUtils floatValue:[params objectForKey:@"cropEndMarker"]];
-    // NSLog(@"[INFO] %f cropEndMarker", cropEndMarker);
-    
+
     if (!audioFileInput || !audioFileOutput) {
         NSLog(@"[ERROR] No audioFileInput or audioFileOutput");
-        [super fireEvent:@"error"];
-        return [NSNull null];
+        [self fireEvent:@"error"];
+        return NO;
     }
 
+    // Remove old audioFileOutput file
     [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput error:NULL];
     
     AVAsset *asset = [AVAsset assetWithURL:audioFileInput];
     
     AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:asset
-                                                                            presetName:AVAssetExportPresetAppleM4A];
+                                                                            presetName:AVAssetExportPresetPassthrough];
     
     if (exportSession == nil) {
         NSLog(@"[ERROR] Could not setup export session");
-        [super fireEvent:@"error"];
-        return [NSNull null];
+        [self fireEvent:@"error"];
+        return NO;
     }
     
     CMTime startTime = CMTimeMake((int)(floor(cropStartMarker * 100)), 100);
     CMTime stopTime = CMTimeMake((int)(ceil(cropEndMarker * 100)), 100);
     CMTimeRange exportTimeRange = CMTimeRangeFromTimeToTime(startTime, stopTime);
     
-    exportSession.outputURL = audioFileOutput;
-    exportSession.outputFileType = AVFileTypeAppleM4A;
+    // Hack: Export to .mov to fix .mp3 exports
+    exportSession.outputFileType = @"com.apple.quicktime-movie";
     exportSession.timeRange = exportTimeRange;
     
+    // Format export path with .mov
+    NSString *fileNameWithExtension = audioFileOutput.lastPathComponent;
+    NSString *fileName = [fileNameWithExtension stringByDeletingPathExtension];
+    NSString *extension = fileNameWithExtension.pathExtension;
+    NSString *exportUrlStr = [audioOutput stringByReplacingOccurrencesOfString: extension withString:@"mov"];
+    NSURL *exportUrl = [NSURL fileURLWithPath:exportUrlStr];
+    
+    // Remove old exportUrl file
+    [[NSFileManager defaultManager] removeItemAtURL:exportUrl error:NULL];
+
+    // Set final export audio url
+    exportSession.outputURL = exportUrl;
+    
+    // Start cropping audio
     [exportSession exportAsynchronouslyWithCompletionHandler:^
      {
          if (AVAssetExportSessionStatusCompleted == exportSession.status) {
-             // NSLog(@"[INFO] Cropped audio");
-             [super fireEvent:@"success"];
+             // Rename file to desired audio file
+             if ([self renameFileFrom:exportUrl to:audioFileOutput]) {
+                 NSLog(@"[INFO] Cropped audio");
+                 [self fireEvent:@"success"];
+             } else {
+                 NSLog(@"[ERROR] NSFileManager: Could not rename cropped audio %@", exportSession.error);
+                 [self fireEvent:@"error"];
+             }
          } else if (AVAssetExportSessionStatusFailed == exportSession.status) {
-             // NSLog(@"[ERROR] Could not crop audio");
-             [super fireEvent:@"error"];
+             NSLog(@"[ERROR] AVAssetExportSessionStatusFailed: Could not crop audio %@", exportSession.error);
+             [self fireEvent:@"error"];
+         } else {
+             NSLog(@"[ERROR] Could not crop audio %d", exportSession.status);
          }
      }];
     
-    return [NSNull null];
+    return YES;
+}
+
+- (BOOL)renameFileFrom:(NSURL*)oldPath to:(NSURL *)newPath
+{
+    NSString *oldFile = [oldPath path];
+    NSString *newFile = [newPath path];
+    NSError *error = nil;
+    
+    if (![[NSFileManager defaultManager] moveItemAtPath:oldFile toPath:newFile error:&error]) {
+        NSLog(@"[ERROR] Failed to move '%@' to '%@': %@", oldPath, newPath, [error localizedDescription]);
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

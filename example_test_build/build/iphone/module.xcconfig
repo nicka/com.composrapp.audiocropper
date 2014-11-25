@@ -1,4 +1,0 @@
-// this is a generated file - DO NOT EDIT
-
-COM_COMPOSRAPP_AUDIOCROPPER_OTHER_LDFLAGS=$(inherited) -framework CoreMedia -framework AVFoundation
-OTHER_LDFLAGS=$(inherited) $(COM_COMPOSRAPP_AUDIOCROPPER_OTHER_LDFLAGS) 

@@ -10,8 +10,8 @@ var AudioCropper = require('com.composrapp.audiocropper');
 Ti.API.info('module is => ' + AudioCropper);
 
 // Setup in and output files
-var originalAudio = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'test1.m4a');
-var croppedAudio = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'cropped-test1.m4a');
+var originalAudio = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'example.mp3');
+var croppedAudio = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'cropped-example.mp3');
 
 // Create sounds
 var inputSound = Ti.Media.createSound({url: originalAudio});
@@ -24,8 +24,8 @@ if (croppedAudio.exists()) croppedAudio.deleteFile();
 // Crop audio and events
 // --------------------------------------------------------
 AudioCropper.cropAudio({
-  cropStartMarker: 4.5,
-  cropEndMarker: 6.5,
+  cropStartMarker: 1.5,
+  cropEndMarker: 3.5,
   audioFileInput: originalAudio,
   audioFileOutput: croppedAudio
 });
@@ -68,6 +68,7 @@ var statusLabel = Ti.UI.createLabel({
 // Add original audio playback button 
 var originalAudioPlaybackBtn = Ti.UI.createButton({
   top: '140dp',
+  width: Ti.UI.FILL,
   title: 'Play original audio'
 });
 
@@ -84,6 +85,7 @@ originalAudioPlaybackBtn.addEventListener('click', function() {
 // Add cropped audio playback button 
 var croppedAudioPlaybackBtn = Ti.UI.createButton({
   top: '240dp',
+  width: Ti.UI.FILL,
   title: 'Play cropped audio'
 });
 
