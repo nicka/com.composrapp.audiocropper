@@ -86,16 +86,20 @@
 
 -(void)cropAudio:(id)args
 {
+    // Retreive params
     NSDictionary * params = [args objectAtIndex:0];
     
+    // Set in and output paths
     NSString *audioInput = [TiUtils stringValue:[params objectForKey:@"audioFileInput"]];
     NSURL *audioFileInput = [NSURL fileURLWithPath:audioInput];
     NSString *audioOutput = [TiUtils stringValue:[params objectForKey:@"audioFileOutput"]];
     NSURL *audioFileOutput = [NSURL fileURLWithPath:audioOutput];
     
+    // Set crop markers
     float cropStartMarker = [TiUtils floatValue:[params objectForKey:@"cropStartMarker"]];
     float cropEndMarker = [TiUtils floatValue:[params objectForKey:@"cropEndMarker"]];
-
+    
+    // Check if in and output markers are set
     if (!audioFileInput || !audioFileOutput) {
         NSLog(@"[ERROR] No audioFileInput or audioFileOutput");
         [self fireEvent:@"error"];
@@ -105,33 +109,53 @@
     // Remove old audioFileOutput file
     [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput error:NULL];
     
+    // Setup new asset
     AVAsset *asset = [AVAsset assetWithURL:audioFileInput];
     
-    AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:asset
-                                                                            presetName:AVAssetExportPresetPassthrough];
+    // --------------------------------------------
+    // AVAssetExportSession
+    // --------------------------------------------
+    // Setup new export session
+    AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:asset presetName:AVAssetExportPresetPassthrough];
     
+    // Check if exportSession is ready
     if (exportSession == nil) {
         NSLog(@"[ERROR] Could not setup export session");
         [self fireEvent:@"error"];
         return NO;
     }
     
+    // Set output file type for new audio
+    if ([audioInput containsString:@".mp3"]) {
+        exportSession.outputFileType = @"com.apple.quicktime-movie";
+    } else if ([audioInput containsString:@".wav"]) {
+        exportSession.outputFileType = @"com.microsoft.waveform-audio";
+    } else if ([audioInput containsString:@".m4a"]) {
+        exportSession.outputFileType = AVFileTypeAppleM4A;
+    }
+    
+    // Set time range for new cropped audio
     CMTime startTime = CMTimeMake((int)(floor(cropStartMarker * 100)), 100);
     CMTime stopTime = CMTimeMake((int)(ceil(cropEndMarker * 100)), 100);
     CMTimeRange exportTimeRange = CMTimeRangeFromTimeToTime(startTime, stopTime);
-    
-    // Hack: Export to .mov to fix .mp3 exports
-    exportSession.outputFileType = @"com.apple.quicktime-movie";
     exportSession.timeRange = exportTimeRange;
     
     // Format export path with .mov
     NSString *fileNameWithExtension = audioFileOutput.lastPathComponent;
     NSString *fileName = [fileNameWithExtension stringByDeletingPathExtension];
     NSString *extension = fileNameWithExtension.pathExtension;
-    NSString *exportUrlStr = [audioOutput stringByReplacingOccurrencesOfString: extension withString:@"mov"];
+    
+    // HACK: Add .mov for .mp3 files
+    NSString *exportUrlStr = audioOutput;
+    // HACK: Add .mov for .mp3 files
+    if ([audioInput containsString:@".mp3"]) {
+        exportUrlStr = [audioOutput stringByReplacingOccurrencesOfString: extension withString:@"mov"];
+    }
+    
+    // Generate final export url
     NSURL *exportUrl = [NSURL fileURLWithPath:exportUrlStr];
     
-    // Remove old exportUrl file
+    // Remove old cropped audio file
     [[NSFileManager defaultManager] removeItemAtURL:exportUrl error:NULL];
 
     // Set final export audio url
@@ -160,7 +184,7 @@
     return YES;
 }
 
-- (BOOL)renameFileFrom:(NSURL*)oldPath to:(NSURL *)newPath
+- (BOOL)renameFileFrom:(NSURL*)oldPath to:(NSURL*)newPath
 {
     NSString *oldFile = [oldPath path];
     NSString *newFile = [newPath path];
