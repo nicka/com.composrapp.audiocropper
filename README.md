@@ -1,5 +1,7 @@
 # iOS Crop audio 
 
+Build in support for .mp3, .m4a and .wav files.
+
 **Usage:**
 
 Add module:
